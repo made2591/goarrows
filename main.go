@@ -9,6 +9,8 @@ import (
 	"math/rand"
 )
 
+var score = 0
+
 var colon string = `
   §
 ##§
@@ -18,35 +20,43 @@ var colon string = `
 `
 
 var upArrow string = `
+       §
    -   §
   /@\  §
  /@@@\ §
 /@@@@@\§
        §
+       §
 `
 
 var downArrow string = `
+       §
        §
 \@@@@@/§
  \@@@/ §
   \@/  §
    -   §
+       §
 `
 
 var leftArrow string = `
+       §
     /@ §
   /@@@ §
 <@@@@@ §
   \@@@ §
     \@ §
+       §
 `
 
 var rightArrow string = `
+       §
 @\     §
 @@@\   §
 <@@@@> §
 @@@/   §
 @/     §
+       §
 `
 
 var zero string = `
@@ -268,7 +278,7 @@ func main() {
 				for {
 					goon := arrows(random(0, 3))
 					if !goon {
-						printString(
+						printString(fmt.Sprintf(
 							`_______  _______  __   __  _______    _______  __   __  _______  ______§
 							|       ||   _   ||  |_|  ||       |  |       ||  | |  ||       ||    _ |  §
 							|    ___||  |_|  ||       ||    ___|  |   _   ||  |_|  ||    ___||   | ||  §
@@ -276,8 +286,13 @@ func main() {
 							|   ||  ||       ||       ||    ___|  |  |_|  ||       ||    ___||    __  |§
 							|   |_| ||   _   || ||_|| ||   |___   |       | |     | |   |___ |   |  | |§
 							|_______||__| |__||_|   |_||_______|  |_______|  |___|  |_______||___|  |_|§
-							`, termbox.ColorRed)
-						time.Sleep(2 * time.Second)
+							|_______||__| |__||_|   |_||_______|  |_______|  |___|  |_______||___|  |_|§
+                                                                                                       §
+												         YOUR FINAL SCORE: %d
+							`, score), termbox.ColorRed)
+
+						time.Sleep(3 * time.Second)
+
 						printString(
 							`                       WELCOME TO....                      §` +
 								`                          ARROWS!!!                           §` +
@@ -291,7 +306,10 @@ func main() {
 								`                                                              §` +
 								`    Press Ctrl+S when you are ready to start...               §`, termbox.ColorYellow)
 						break arrowloop
+					} else {
+						score++
 					}
+					fmt.Printf("SCORE: %d", score)
 				}
 			case termbox.KeyEsc:
 				break mainloop
